@@ -4,9 +4,9 @@ using UnityEngine;
 using Unity.MLAgents;
 
 public class DodgeballEnvController : MonoBehaviour {  
-    public int playerMaxHP = 2;
+    public int playerMaxHP = 1;
     //Players Remaining
-    private int numberOfBluePlayersRemaining = 1;
+    private int numberOfBluePlayersRemaining = 2;
     private int numberOfOrangePlayersRemaining = 1; 
     // Each Group for the player teams
     private SimpleMultiAgentGroup Team0AgentGroup;
@@ -85,7 +85,7 @@ public class DodgeballEnvController : MonoBehaviour {
     void ResetScene() {
         resetTimer = 0;
 
-        numberOfBluePlayersRemaining = 1;
+        numberOfBluePlayersRemaining = 2;
         numberOfOrangePlayersRemaining = 1;
         
         foreach (var player in Team0Players) {
@@ -108,6 +108,7 @@ public class DodgeballEnvController : MonoBehaviour {
         ball.transform.localPosition = new Vector3(Random.Range(-4f, 4f), 2f, 0f);
         ballRb.angularVelocity = Vector3.zero;
         ballRb.linearVelocity = Vector3.zero;
+        ballRb.useGravity = true;
     }
 
     public void PlayerHit(DodgeballAgent hit, DodgeballAgent thrower) {
@@ -123,8 +124,8 @@ public class DodgeballEnvController : MonoBehaviour {
         Debug.Log($"THROWER {ThrowAgentGroup}");  
         if (hit.HitPointsRemaining <= 1) {
             // If the bool statement is true return first option, otherwise second
-            numberOfBluePlayersRemaining -= hitTeamID == 1 ? 1 : 0;
-            numberOfOrangePlayersRemaining -= hitTeamID == 1 ? 0 : 1;
+            numberOfBluePlayersRemaining -= hitTeamID == 1 ? 0 : 1;
+            numberOfOrangePlayersRemaining -= hitTeamID == 1 ? 1 : 0;
             if (numberOfBluePlayersRemaining == 0 || numberOfOrangePlayersRemaining == 0) {
                 ThrowAgentGroup.AddGroupReward(2.0f - timeBonus * (resetTimer / MaxEnvironmentSteps));
                 HitAgentGroup.AddGroupReward(-1.0f);
