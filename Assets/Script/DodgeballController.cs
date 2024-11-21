@@ -53,7 +53,7 @@ public class DodgeballController : MonoBehaviour
 
     public void throwBall(Transform playerTransform, DodgeballAgent thrownBy)
     {
-        Debug.Log("Ball throwBall called");
+        Debug.Log($"Ball throwBall called {thrownBy.teamID}");
         if(!liveBall && thrownBy != null) {
             liveBall = true;
             transform.SetParent(null);
@@ -68,23 +68,25 @@ public class DodgeballController : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision) {
         Debug.Log("Ball collided with " + collision.gameObject.tag);
-        if (liveBall && collision.gameObject.CompareTag("Wall")) {
+        if (liveBall && (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Floor") ) ) {
             rb.useGravity = true;
             liveBall = false;
             thrownBy = null;
             Debug.Log("Ball thrown into wall");
-        } else if (liveBall && collision.gameObject.CompareTag("Player")) {
+        } else if (liveBall && thrownBy != null && collision.gameObject.CompareTag("Player")) {
+            liveBall = false;
             DodgeballAgent playerHit = collision.gameObject.GetComponent<DodgeballAgent>();
+            Debug.Log($"PlayerHit {playerHit} by {thrownBy}" );
             envController.PlayerHit(playerHit, thrownBy);
             rb.useGravity = true;
-            liveBall = false;
             thrownBy = null;
             Debug.Log("Ball thrown into Player");
-        } else if (liveBall && collision.gameObject.CompareTag("EnemyPlayer")) {
+        } else if (liveBall && thrownBy != null && collision.gameObject.CompareTag("EnemyPlayer")) {
+            liveBall = false;
             DodgeballAgent playerHit = collision.gameObject.GetComponent<DodgeballAgent>();
+            Debug.Log($"PlayerHit {playerHit} by {thrownBy}" );
             envController.PlayerHit(playerHit, thrownBy);
             rb.useGravity = true;
-            liveBall = false;
             thrownBy = null;
             Debug.Log("Ball thrown into EnemyPlayer");
         }

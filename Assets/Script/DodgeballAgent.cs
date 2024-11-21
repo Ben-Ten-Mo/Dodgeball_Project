@@ -28,12 +28,15 @@ public class DodgeballAgent : Agent
         agentRb = GetComponent<Rigidbody>();
         envController =  GetComponentInParent<DodgeballEnvController>();
         behaviorParameters = gameObject.GetComponent<BehaviorParameters>();
+        teamID = behaviorParameters.TeamId;
         if (firstInitialize)
         {
             startingPos = transform.position;
             startingRot = transform.rotation;
             firstInitialize = false;
+            
         }
+        
     }
     public override void CollectObservations(VectorSensor sensor) {
         sensor.AddObservation(transform.position);
@@ -41,7 +44,7 @@ public class DodgeballAgent : Agent
     }
 
     public override void OnActionReceived(ActionBuffers actions) {
-        Debug.Log("Action Recieved");
+        //Debug.Log("Action Recieved");
 
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
@@ -89,18 +92,18 @@ public class DodgeballAgent : Agent
         agentRb.angularDamping = 1;
     }
 
-
+    /*
     private void OnCollisionEnter(Collision other) {
         DodgeballController ballController = other.gameObject.GetComponent<DodgeballController>();
         if (other.gameObject.CompareTag("Wall")) {
-            Debug.Log("Wall hit");
+            //Debug.Log("Wall hit");
 
         } else if (other.gameObject.CompareTag("Ball")) {
             Debug.Log("Ball hit");
             //envController.PlayerHit(this, ballController.thrownBy);
         } 
         
-    }
+    }*/
 
 
 }

@@ -31,7 +31,7 @@ public class DodgeballEnvController : MonoBehaviour {
     public List<PlayerInfo> Team0Players;
     public List<PlayerInfo> Team1Players;
     public GameObject ball;
-    Rigidbody ballRb;
+    public Rigidbody ballRb;
     private int resetTimer;
     public int MaxEnvironmentSteps;
     private bool initializedGame;
@@ -40,9 +40,11 @@ public class DodgeballEnvController : MonoBehaviour {
     
 
     void Start() {
+        Initialize();
     }
 
     void Initialize() {
+        
         Team0AgentGroup = new SimpleMultiAgentGroup();
         Team1AgentGroup = new SimpleMultiAgentGroup();
         ResetBall();
@@ -62,9 +64,8 @@ public class DodgeballEnvController : MonoBehaviour {
             player.Agent.behaviorParameters.TeamId = 1;
             player.TeamID = 1;
             player.Agent.NumberOfTimesPlayerCanBeHit = playerMaxHP;
-            Team0AgentGroup.RegisterAgent(player.Agent);
+            Team1AgentGroup.RegisterAgent(player.Agent);
         }
-
         initializedGame = true;
         ResetScene();
 
@@ -112,16 +113,18 @@ public class DodgeballEnvController : MonoBehaviour {
     public void PlayerHit(DodgeballAgent hit, DodgeballAgent thrower) {
         // Get team Id's of players involved
         int hitTeamID = hit.teamID;
+        Debug.Log($"HIT {hitTeamID}");
         int throwerTeamID = thrower.teamID;
+        Debug.Log($"THROW {throwerTeamID}");
         // If the bool statement is true return first option, otherwise second
-        var HitAgentGroup = hitTeamID == 1 ? Team1AgentGroup : Team0AgentGroup;
-        var ThrowAgentGroup = throwerTeamID == 1 ? Team1AgentGroup : Team0AgentGroup;
-
+        SimpleMultiAgentGroup HitAgentGroup = hitTeamID == 1 ? Team1AgentGroup : Team0AgentGroup;
+        Debug.Log($"HITTER {HitAgentGroup}");
+        SimpleMultiAgentGroup ThrowAgentGroup = throwerTeamID == 1 ? Team1AgentGroup : Team0AgentGroup;
+        Debug.Log($"THROWER {ThrowAgentGroup}");  
         if (hit.HitPointsRemaining <= 1) {
             // If the bool statement is true return first option, otherwise second
-            numberOfBluePlayersRemaining -= hitTeamID == 1 ? 0 : 1;
-            numberOfOrangePlayersRemaining -= hitTeamID == 1 ? 1 : 0;
-            hit.gameObject.SetActive(false);
+            numberOfBluePlayersRemaining -= hitTeamID == 1 ? 1 : 0;
+            numberOfOrangePlayersRemaining -= hitTeamID == 1 ? 0 : 1;
             if (numberOfBluePlayersRemaining == 0 || numberOfOrangePlayersRemaining == 0) {
                 ThrowAgentGroup.AddGroupReward(2.0f - timeBonus * (resetTimer / MaxEnvironmentSteps));
                 HitAgentGroup.AddGroupReward(-1.0f);
@@ -129,6 +132,8 @@ public class DodgeballEnvController : MonoBehaviour {
                 HitAgentGroup.EndGroupEpisode();
                 Debug.Log($"Team {throwerTeamID} Won");
                 ResetScene();
+            } else {
+                hit.gameObject.SetActive(false);
             }
             
         } else {
