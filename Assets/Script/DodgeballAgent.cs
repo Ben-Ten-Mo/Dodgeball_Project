@@ -41,7 +41,7 @@ public class DodgeballAgent : Agent
     }
     public override void CollectObservations(VectorSensor sensor) {
         sensor.AddObservation(transform.position);
-        sensor.AddObservation(targetTransform.position);
+        sensor.AddObservation(transform.rotation);
     }
 
     public override void OnActionReceived(ActionBuffers actions) {
