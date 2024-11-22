@@ -30,6 +30,14 @@ public class DodgeballEnvController : MonoBehaviour {
     // List of Players on each team with their informations
     public List<PlayerInfo> Team0Players;
     public List<PlayerInfo> Team1Players;
+    /*
+    [System.Serializable]
+    public class BallInfo
+    {
+        public GameObject ballObject;
+        public Rigidbody ballRb;
+    }
+    public List<BallInfo> GameBalls;*/
     public GameObject ball;
     public Rigidbody ballRb;
     private int resetTimer;
@@ -105,6 +113,11 @@ public class DodgeballEnvController : MonoBehaviour {
     }
 
     void ResetBall() {
+        /*
+        foreach (var ball in GameBalls) {
+            ball.ballObject.transform.localPosition = new Vector3();
+            ball.ballRb
+        } */
         ball.transform.localPosition = new Vector3(Random.Range(-4f, 4f), 2f, 0f);
         ballRb.angularVelocity = Vector3.zero;
         ballRb.linearVelocity = Vector3.zero;
