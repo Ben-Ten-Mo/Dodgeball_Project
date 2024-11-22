@@ -12,7 +12,6 @@ public class DodgeballAgent : Agent
     public GameObject area;
     public float playerSpeed = 3f;
     public float rotationSpeed = 200f; 
-    [SerializeField] private Transform targetTransform;
     [SerializeField] List<GameObject> balls;
     [SerializeField] float distanceToPickUp = 2f;
 
@@ -56,7 +55,6 @@ public class DodgeballAgent : Agent
         } else {
 
         }
-
 
         float moveInput = actions.ContinuousActions[0]; // Move forward/backward
         float rotateInput = actions.ContinuousActions[1]; // Rotation (left/right)

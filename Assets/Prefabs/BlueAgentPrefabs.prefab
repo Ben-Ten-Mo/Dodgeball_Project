@@ -600,7 +600,6 @@ MonoBehaviour:
   MaxStep: 1000
   area: {fileID: 0}
   playerSpeed: 3
-  targetTransform: {fileID: 120003104393032338, guid: 5eae935ac3d839747935e482453ca310, type: 3}
   balls:
   - {fileID: 0}
   distanceToPickUp: 2
