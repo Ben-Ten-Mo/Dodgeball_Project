@@ -6,8 +6,8 @@ using Unity.MLAgents;
 public class DodgeballEnvController : MonoBehaviour {  
     public int playerMaxHP = 1;
     //Players Remaining
-    private int numberOfBluePlayersRemaining = 2;
-    private int numberOfOrangePlayersRemaining = 1; 
+    private int numberOfBluePlayersRemaining = 3;
+    private int numberOfOrangePlayersRemaining = 3; 
     // Each Group for the player teams
     private SimpleMultiAgentGroup Team0AgentGroup;
     private SimpleMultiAgentGroup Team1AgentGroup;
@@ -90,8 +90,8 @@ public class DodgeballEnvController : MonoBehaviour {
     void ResetScene() {
         resetTimer = 0;
 
-        numberOfBluePlayersRemaining = 2;
-        numberOfOrangePlayersRemaining = 1;
+        numberOfBluePlayersRemaining = 3;
+        numberOfOrangePlayersRemaining = 3;
         
         foreach (var player in Team0Players) {
             player.Agent.HitPointsRemaining = playerMaxHP;
@@ -147,6 +147,7 @@ public class DodgeballEnvController : MonoBehaviour {
         } else {
             hit.HitPointsRemaining--;
             thrower.AddReward(hitBonus);
+            hit.AddReward(-hitBonus);
         }
     }
 
