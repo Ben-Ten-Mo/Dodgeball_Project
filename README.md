@@ -7,13 +7,13 @@ Welcome to our AI Dodgeball repo.
 ## Document Overview
 - **Assets**
   - Prefabs: Folder containing all generated objects.
-  - Scenes: Contains Dodgeball.unity. The environment used to train the agents.
+  - Scenes/Dodgeball.unity: The environment used to train the agents.
   - Scripts:
     - DodgeballAgent.cs: Logic that controls how the agent interacts with the environment.
     - DodgeballController.cs: Logic that controls how the ball reacts to events from interacting with the agent and environment.
     - DodgeballEnvController.cs: Logic that controls how the environment reacts to events that occur from agent and ball actions
     - All Dodgeball.onx files: Brain of the agents after being trained, the number after dash corresponds to the number of steps the brain has been trained on.
-  - config: Contains Dodgeball.yaml. Configurations of hyperparameters to train agents
+  - config/Dodgeball.yaml: Configurations of hyperparameters to train agents
 - **Packages**: Contains packages required by the unity project
 - **ProjectSettings**: Contains configurations for the unity project settings
 ## Installation
