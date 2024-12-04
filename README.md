@@ -20,11 +20,16 @@ Welcome to our AI Dodgeball repo.
 ## Getting Started
 
 ### Prerequisites
+- Unity (2023.2 or later)
+- Unity Hub - recommended
+- Python (>= 3.10.1, <=3.10.12) - recommend using 3.10.12
+- com.unity.ml-agents Unity package
+- mlagents-envs
+- mlagents Python package
+You can follow the Installation Guide provided by Unity Technologies for ML-AGENTS to download all of the prerequisites https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md
+
 ## Installation
-Follow the Installation Guide provided by Unity Technologies for ML-AGENTS https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md
-- Install Unity Hub
-- Install Unity
-- Install ML-Agents
+
 - Clone this repo
 - Add Dodgeball_Project from disk in Unity Hub
 - Open Dodgeball_Project from Unity Hub
