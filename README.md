@@ -16,6 +16,10 @@ Welcome to our AI Dodgeball repo.
   - config/Dodgeball.yaml: Configurations of hyperparameters to train agents
 - **Packages**: Contains packages required by the unity project
 - **ProjectSettings**: Contains configurations for the unity project settings
+  
+## Getting Started
+
+### Prerequisites
 ## Installation
 Follow the Installation Guide provided by Unity Technologies for ML-AGENTS https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md
 - Install Unity Hub
