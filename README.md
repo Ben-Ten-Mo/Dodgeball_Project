@@ -26,6 +26,7 @@ Welcome to our AI Dodgeball repo.
 - com.unity.ml-agents Unity package
 - mlagents-envs
 - mlagents Python package
+
 You can follow the Installation Guide provided by Unity Technologies for ML-AGENTS to download all of the prerequisites https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md
 
 ## Installation
