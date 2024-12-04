@@ -15,8 +15,7 @@ Welcome to our AI Dodgeball repo.
     - All Dodgeball.onx files: Brain of the agents after being trained, the number after dash corresponds to the number of steps the brain has been trained on.
   - config: Contains Dodgeball.yaml. Configurations of hyperparameters to train agents
 - **Packages**: Contains packages required by the unity project
-- **ProjectSettings**: 
-- **Scenes**
+- **ProjectSettings**: Contains configurations for the unity project settings
 ## Installation
 Follow the Installation Guide provided by Unity Technologies for ML-AGENTS https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md
 - Install Unity Hub
