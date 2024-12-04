@@ -1,7 +1,7 @@
 # Dodgeball_Project
 
 ## Overview
-Welcome to our AI Dodgeball repo.
+Welcome to our AI Dodgeball repo. Here you will find all the neccessary files to run our dodgeball environment in Unity with a pre-trained brain. This brain is the result of a MA-POCA/SelfPlay training process and equips each team with the neccesary behaviors to at least kick off a proper game of 3v3 dodgeball.
 ## Features
 
 ## Document Overview
