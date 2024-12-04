@@ -56,8 +56,8 @@ public class DodgeballAgent : Agent
 
         }
 
-        float moveInput = actions.ContinuousActions[0]; // Move forward/backward
-        float rotateInput = actions.ContinuousActions[1]; // Rotation (left/right)
+        float moveInput = actions.DiscreteActions[1]; // Move forward/backward
+        float rotateInput = actions.ContinuousActions[0]; // Rotation (left/right)
 
         Vector3 move = transform.forward * moveInput * playerSpeed * Time.deltaTime;
         transform.position += move;
@@ -71,7 +71,7 @@ public class DodgeballAgent : Agent
             if (Vector3.Distance(ball.transform.position, transform.position) < distanceToPickUp) {
                 DodgeballController script = ball.GetComponent<DodgeballController>();
                 script.pickUpBall(transform, this);
-                this.SetReward(1.0f);
+                // this.SetReward(1.0f);
                 break;
             }
         }
@@ -97,18 +97,20 @@ public class DodgeballAgent : Agent
         agentRb.angularDamping = 1;
     }
 
-    /*
+    
     private void OnCollisionEnter(Collision other) {
         DodgeballController ballController = other.gameObject.GetComponent<DodgeballController>();
         if (other.gameObject.CompareTag("Wall")) {
             //Debug.Log("Wall hit");
 
-        } else if (other.gameObject.CompareTag("Ball")) {
-            Debug.Log("Ball hit");
+            this.AddReward(-0.5f);
+
+        } //else if (other.gameObject.CompareTag("Ball")) {
+            //Debug.Log("Ball hit");
             //envController.PlayerHit(this, ballController.thrownBy);
-        } 
+        //} 
         
-    }*/
+    }
 
 
 }

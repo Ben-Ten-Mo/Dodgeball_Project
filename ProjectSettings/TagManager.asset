@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - Wall
   - EnemyPlayer
+  - Ceiling
   layers:
   - Default
   - TransparentFX

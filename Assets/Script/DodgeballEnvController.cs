@@ -40,7 +40,7 @@ public class DodgeballEnvController : MonoBehaviour {
     private int resetTimer;
     public int MaxEnvironmentSteps;
     private bool initializedGame;
-    public float hitBonus = 1f;
+    public float hitBonus = 5f;
     public float timeBonus = 1f;
     
 
@@ -111,34 +111,36 @@ public class DodgeballEnvController : MonoBehaviour {
 
     void ResetBall() {
         foreach (var ball in GameBalls) {
-            ball.ballObject.transform.localPosition = new Vector3(Random.Range(-4f, 4f), 2f, 0f);
-            ball.ballRb.angularVelocity = Vector3.zero;
-            ball.ballRb.linearVelocity = Vector3.zero;
-            ball.ballRb.useGravity = true;
+            ball.ballRb.isKinematic = true;
+            ball.ballObject.transform.SetParent(transform);
+            ball.ballObject.transform.localPosition = new Vector3(Random.Range(-4f, 4f), 0.5f, 0f);
+            // ball.ballRb.angularVelocity = Vector3.zero;
+            // ball.ballRb.linearVelocity = Vector3.zero;
+            //ball.ballRb.useGravity = true;
         } 
     }
 
     public void PlayerHit(DodgeballAgent hit, DodgeballAgent thrower) {
         // Get team Id's of players involved
         int hitTeamID = hit.teamID;
-        Debug.Log($"HIT {hitTeamID}");
+        // Debug.Log($"HIT {hitTeamID}");
         int throwerTeamID = thrower.teamID;
-        Debug.Log($"THROW {throwerTeamID}");
+        // Debug.Log($"THROW {throwerTeamID}");
         // If the bool statement is true return first option, otherwise second
         SimpleMultiAgentGroup HitAgentGroup = hitTeamID == 1 ? Team1AgentGroup : Team0AgentGroup;
-        Debug.Log($"HITTER {HitAgentGroup}");
+        // Debug.Log($"HITTER {HitAgentGroup}");
         SimpleMultiAgentGroup ThrowAgentGroup = throwerTeamID == 1 ? Team1AgentGroup : Team0AgentGroup;
-        Debug.Log($"THROWER {ThrowAgentGroup}");  
+        // Debug.Log($"THROWER {ThrowAgentGroup}");  
         if (hit.HitPointsRemaining <= 1) {
             // If the bool statement is true return first option, otherwise second
             numberOfBluePlayersRemaining -= hitTeamID == 1 ? 0 : 1;
             numberOfOrangePlayersRemaining -= hitTeamID == 1 ? 1 : 0;
             if (numberOfBluePlayersRemaining == 0 || numberOfOrangePlayersRemaining == 0) {
-                ThrowAgentGroup.AddGroupReward(2.0f - timeBonus * (resetTimer / MaxEnvironmentSteps));
-                HitAgentGroup.AddGroupReward(-1.0f);
+                ThrowAgentGroup.AddGroupReward(10.0f - timeBonus * (resetTimer / MaxEnvironmentSteps));
+                HitAgentGroup.AddGroupReward(-10.0f);
                 ThrowAgentGroup.EndGroupEpisode();
                 HitAgentGroup.EndGroupEpisode();
-                Debug.Log($"Team {throwerTeamID} Won");
+                // Debug.Log($"Team {throwerTeamID} Won");
                 ResetScene();
             } else {
                 hit.gameObject.SetActive(false);
@@ -147,7 +149,7 @@ public class DodgeballEnvController : MonoBehaviour {
         } else {
             hit.HitPointsRemaining--;
             thrower.AddReward(hitBonus);
-            hit.AddReward(-hitBonus);
+            hit.AddReward(-hitBonus - 2f);
         }
     }
 

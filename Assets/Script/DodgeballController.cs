@@ -13,6 +13,8 @@ public class DodgeballController : MonoBehaviour
     public Rigidbody rb;
     public SphereCollider coll;
 
+    public GameObject arena;
+
     public DodgeballEnvController envController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,9 +32,11 @@ public class DodgeballController : MonoBehaviour
     }
 
     public void OnEpisodeBegin() {
-        Debug.Log("Ball Episode Begin called");
-        transform.position = new Vector3(Random.Range(-4f, 4f), 0.5f, 0f);
-        transform.SetParent(null);
+        // Debug.Log("Ball Episode Begin called");
+        transform.SetParent(arena.transform);
+        transform.localPosition = new Vector3(Random.Range(-4f, 4f), 0.5f, 0f);
+        rb.isKinematic = false;
+        rb.useGravity = true;
         liveBall = false;
         thrownBy = null;
     }
@@ -40,7 +44,7 @@ public class DodgeballController : MonoBehaviour
 
     public void pickUpBall(Transform playerTransform, DodgeballAgent thrower)
     {
-        Debug.Log("Ball pickUpBall called");
+        // Debug.Log("Ball pickUpBall called");
         if(!liveBall) {
             rb.isKinematic = true;
             coll.enabled = false;
@@ -53,10 +57,10 @@ public class DodgeballController : MonoBehaviour
 
     public void throwBall(Transform playerTransform, DodgeballAgent thrownBy)
     {
-        Debug.Log($"Ball throwBall called {thrownBy.teamID}");
-        if(!liveBall && thrownBy != null) {
+        // Debug.Log($"Ball throwBall called {thrownBy.teamID}");
+        if(!liveBall) {
             liveBall = true;
-            transform.SetParent(null);
+            transform.SetParent(arena.transform);
             rb.isKinematic = false;
             rb.useGravity = false;
             coll.enabled = true;
@@ -66,29 +70,46 @@ public class DodgeballController : MonoBehaviour
         }
     }
 
+
     public void OnCollisionEnter(Collision collision) {
-        Debug.Log("Ball collided with " + collision.gameObject.tag);
-        if (liveBall && (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Floor") ) ) {
+        // Debug.Log("Ball collided with " + collision.gameObject.tag); 
+
+        if (collision.gameObject.CompareTag("Floor")) {
+            rb.useGravity = false;
+            rb.linearVelocity = new Vector3(0, 0, 0);
+            rb.isKinematic = true;
+        }
+        if (liveBall && collision.gameObject.CompareTag("Ceiling") ) {
+            thrownBy.AddReward(-2f);
+            rb.useGravity = true;
+            thrownBy = null;
+            liveBall = false;
+        } else if (liveBall && collision.gameObject.CompareTag("Wall") ) { //|| collision.gameObject.CompareTag("Floor") ) ) {
             rb.useGravity = true;
             liveBall = false;
             thrownBy = null;
-            Debug.Log("Ball thrown into wall");
+            // Debug.Log("Ball thrown into wall");
         } else if (liveBall && thrownBy != null && collision.gameObject.CompareTag("Player")) {
             liveBall = false;
             DodgeballAgent playerHit = collision.gameObject.GetComponent<DodgeballAgent>();
-            Debug.Log($"PlayerHit {playerHit} by {thrownBy}" );
+            // Debug.Log($"PlayerHit {playerHit} by {thrownBy}" );
             envController.PlayerHit(playerHit, thrownBy);
             rb.useGravity = true;
             thrownBy = null;
-            Debug.Log("Ball thrown into Player");
+            // Debug.Log("Ball thrown into Player");
         } else if (liveBall && thrownBy != null && collision.gameObject.CompareTag("EnemyPlayer")) {
             liveBall = false;
             DodgeballAgent playerHit = collision.gameObject.GetComponent<DodgeballAgent>();
-            Debug.Log($"PlayerHit {playerHit} by {thrownBy}" );
+            // Debug.Log($"PlayerHit {playerHit} by {thrownBy}" );
             envController.PlayerHit(playerHit, thrownBy);
             rb.useGravity = true;
             thrownBy = null;
-            Debug.Log("Ball thrown into EnemyPlayer");
+            // Debug.Log("Ball thrown into EnemyPlayer");
+        } else {
+            liveBall = false;
+            thrownBy = null;
+            Debug.Log("Ball hit: " + collision.gameObject);
+            rb.useGravity = true;
         }
     }
 }
