@@ -27,11 +27,19 @@ Welcome to our AI Dodgeball repo.
 - mlagents-envs
 - mlagents Python package
 
+## Installation
 You can follow the Installation Guide provided by Unity Technologies for ML-AGENTS to download all of the prerequisites https://github.com/Unity-Technologies/ml-agents/blob/develop/docs/Installation.md
 
-## Installation
-
-- Clone this repo
-- Add Dodgeball_Project from disk in Unity Hub
-- Open Dodgeball_Project from Unity Hub
-- Press the play button
+## Running the Project
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/Dodgeball_Project.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Dodgeball_Project
+   ```
+3. Add Dodgeball_Project from disk in Unity Hub
+4. Open Dodgeball_Project from Unity Hub
+5. Open Assets Folder -> Open Scenes Folder -> Open Dodgeball.unity
+6. Press the play button
